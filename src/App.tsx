@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import ChatMembers from "./components/ChatMembers";
 import MessageInput from "./components/MessageInput";
 import MessageWindow from "./components/MessageWindow";
 import { getDateTime } from "./helpers/date";
@@ -83,6 +84,8 @@ function App() {
     (name: string) => () => {
       if (socket.current?.readyState !== WebSocket.OPEN) {
         setMe(name);
+        setTo(undefined);
+        setUserName("");
         socket.current = new WebSocket(import.meta.env.VITE_SOCKET_URL);
         socket.current.addEventListener("open", onSocketOpen(name));
         socket.current.addEventListener("close", onSocketClose);
@@ -102,6 +105,10 @@ function App() {
     setUserName(event.target.value);
   };
 
+  const handleCallback = (member: string | undefined) => {
+    setTo(member);
+  };
+
   return (
     <div>
       {connected ? (
@@ -115,26 +122,12 @@ function App() {
                 <h1 className="text-3xl font-bold underline pb-8 text-center">
                   {me}
                 </h1>
-                <ul className="space-y-5">
-                  {members &&
-                    members
-                      .filter((member) => member !== me)
-                      .map((member, index) => (
-                        <button
-                          className="border-2 rounded p-2 margin h-full rounded-xl w-full"
-                          key={`${member}-${index}`}
-                          onClick={() => {
-                            if (to === member) {
-                              setTo(undefined);
-                            } else {
-                              setTo(member);
-                            }
-                          }}
-                        >
-                          {member}
-                        </button>
-                      ))}
-                </ul>
+                <ChatMembers
+                  members={members}
+                  to={to}
+                  me={me}
+                  callback={handleCallback}
+                />
               </div>
               <div className="absolute inset-x-0 bottom-0 h-16">
                 <button
