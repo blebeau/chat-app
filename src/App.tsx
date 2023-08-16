@@ -116,9 +116,9 @@ function App() {
           style={{ minHeight: "100vh" }}
           className="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow"
         >
-          <div className="w-2/5 flex-grow pt-1 px-3">
-            <div className="w-fixed w-full h-full flex-shrink flex-grow-0 px-4 bg-green-100 rounded-xl">
-              <div className="w-full flex-grow pt-1 px-3 h-3/6">
+          <div className="sm:w-2/5 w-full flex-grow pt-1 px-3">
+            <div className="w-fixed w-full h-1/5 overflow-y-auto sm:h-full flex-shrink flex-grow-0 px-4 bg-green-100 rounded-xl">
+              <div className="w-full flex-grow pt-1 px-3 sm:h-1/2">
                 <h1 className="text-3xl font-bold underline pb-8 text-center">
                   {me}
                 </h1>
@@ -141,11 +141,11 @@ function App() {
           </div>
           <main role="main" className="w-full flex-grow pt-1 px-3 h-screen">
             <div className="p-2 w-fixed w-full h-full flex-shrink flex-grow-0 px-4 bg-sky-100 rounded-xl">
-              <div className="w-full flex-grow pt-1 px-3 h-3/5 overflow-y-auto">
+              <div className="w-full flex-grow pt-1 px-3 overflow-y-auto h-1/2 sm:h-[70%]">
                 <h2 className="text-center">{to ? to : "Public"}</h2>
                 <MessageWindow messages={messages} me={me} />
               </div>
-              <div className="place-content-center p-5  h-1/5">
+              <div className="place-content-center p-5 h-1/5">
                 <div className="absolute w-full bottom-10 center">
                   <MessageInput to={to} socket={socket} />
                 </div>
